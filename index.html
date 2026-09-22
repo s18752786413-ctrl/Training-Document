@@ -13,7 +13,7 @@
 </style></head><body><main class="wrap">
 <section class="hero"><div class="eyebrow">外宣工作资料库 · FEISHU NAVIGATION</div><h1>外宣飞书文档导航</h1><p>把招聘、培训、流程、表格和部门资料集中到一个清晰入口。</p><div class="stats"><div class="stat"><b id="total">0</b>项资源</div><div class="stat"><b id="categoryCount">0</b>类资料</div><div class="stat"><b>2026.09</b>最近整理</div></div></section>
 <section class="toolbar"><input id="search" class="search" placeholder="搜索文档名称、分类或备注…"><div id="filters" class="filters"></div></section><div id="hint" class="hint"></div><section id="grid" class="grid"></section><div id="empty" class="empty">没有找到匹配的文档，请换个关键词试试。</div><div class="foot">资源来源：飞书云空间导航 · 培训时间和参与人员记录保存在当前浏览器</div>
-</main><script>
+</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0"></script><script src="training-record-sync.js"></script><script>
 const D=[
 ['招聘政策','线下主播待遇政策-外宣简版','文档','当前重点使用；发布前复核保底及履约口径','https://acnvrrksd55h.feishu.cn/docx/CdvbdcahIoTWRwxeqUzcrvmen2d'],
 ['招聘SOP','如何面试主播指导SOP','文档','当前版本；链接已按飞书最新锚点更新','https://acnvrrksd55h.feishu.cn/docx/Oku8dOsh9olbEEx6UkHc7KM6n6b#doxcnCFHcxuihuJGz6gJGeoNcXd'],
@@ -26,7 +26,7 @@ const D=[
 ['工作计划','外宣工作计划_企微迁移副本','在线表格','迁移副本','https://acnvrrksd55h.feishu.cn/sheets/YJb7srJUqh8G3etFVYpcgBPGnzu'],
 ['平台培训','抖音接表单培训流程_待加入后复制','文档','待加入源文档后复制；暂作占位','https://acnvrrksd55h.feishu.cn/docx/XZ5LdxOmuoyF6AxAicMc0iVhnFb#doxcnTu17sTP9V0T4AaTavPRfWm'],
 ['招聘SOP','外宣-线上招募接人SOP','文档','当前版本；已创建于“03_招聘SOP与流程/05_接表单”','https://acnvrrksd55h.feishu.cn/docx/Y8qSdYxloobHW9xl3xYcd9GKnxg'],
-['薪酬绩效','外宣经纪人薪资与绩效政策（讨论稿）','文档','V0.1讨论稿，未生效；已创建于“07_数据分析与绩效/07_小组绩效”','https://acnvrrksd55h.feishu.cn/docx/PMkCdwYUmoiBcwxpgARcOAY5nre'],
+['薪酬绩效','外宣经纪人合作费用与招募激励办法','文档','已同步本地V1.1正式稿；基础合作费用、履约奖励条件及部分目标规则仍待确认','https://acnvrrksd55h.feishu.cn/docx/PMkCdwYUmoiBcwxpgARcOAY5nre'],
 ['成本/财务','无标题文档_用途待确认','文档','标题和用途待确认','https://acnvrrksd55h.feishu.cn/docx/UJT0dcB4hoRbZCxPICdc5HiGnhc#doxcncDDMqLVS1Qtq5PETITCN2m'],
 ['经验资料','外宣经验总结贴','文档','经验资料','https://acnvrrksd55h.feishu.cn/docx/Lea8dDcl2olAJAxLgc2cNBtlnHb'],
 ['平台培训','UKI接表单培训流程_外宣专用版_20250830','文档','历史版本，日期较早','https://acnvrrksd55h.feishu.cn/docx/HLs2dakRjo8GRTxfJ5gcCyumnWf'],
@@ -64,6 +64,7 @@ const D=[
 const CREATED={
 '线下主播待遇政策-外宣简版':'2026-09-19','如何面试主播指导SOP':'2026-09-17','外宣到面至入职全流程SOP':'2026-09-17','如何邀请线上线下主播入会SOP':'2026-09-17','外宣招人完整SOP':'2026-09-13','厅管招聘面试表格':'2026-09-13','面试邀请名单':'2026-09-13','各平台推人计划_企微迁移副本':'2026-09-13','外宣工作计划_企微迁移副本':'2026-09-13','抖音接表单培训流程_待加入后复制':'2026-09-13','无标题文档_用途待确认':'2026-09-12','外宣经验总结贴':'2026-09-12','UKI接表单培训流程_外宣专用版_20250830':'2026-09-12','外宣侧推人对接SOP':'2026-09-12','话费报销流程':'2026-09-12','外宣员工手册':'2026-09-12','每日完成的登记表':'2026-09-12','外宣厅管推人流程':'2026-09-12','线下不露脸语音厅聊天嘉宾招聘发布文案':'2026-09-12','招聘信息资料使用说明':'2026-09-12','外宣招聘平台基础培训_抖音朵朵兔keke_V0.3.pptx':'2026-09-12','外宣招聘平台基础培训_抖音朵朵兔keke_V0.2.pptx':'2026-09-12','外宣招聘平台基础培训模板_抖音朵朵兔keke_V0.1.pptx':'2026-09-12','语音厅行业黑话词典':'2026-09-12','外宣招聘平台基础培训PPT制作Plan':'2026-09-12','keke平台招聘培训内容整理':'2026-09-12','朵朵兔平台招聘培训内容整理':'2026-09-12','抖音平台招聘培训内容整理':'2026-09-12','新外宣7天岗前培训手册_V0.1':'2026-09-12','外宣招聘全流程SOP_V0.1旧版':'2026-09-12','外宣招聘SOP与培训资料体系清单':'2026-09-12','外宣招聘平台基础培训_抖音朵朵兔keke_V0.4':'2026-09-12','外宣招聘平台基础培训_抖音朵朵兔keke_V0.4.pptx':'2026-09-12','外宣部门每日工作计划':'2026-09-12','外宣部门资料架构与执行口径确认记录_2026-09-11':'2026-09-12','外宣资料迁移台账':'2026-09-12','01_新外宣入职':'2026-09-12','08_外宣向厅管转交':'2026-09-12','外宣部门':'2026-09-12','新人培训简易版':'2026-09-06','【对外宣讲】语音聊天室主播扶持任务_2026年8月起':'2025-08-26','【对外宣讲】语音聊天室主播扶持任务_2025年8月':'2025-06-28','《聘谁》A级招聘法 · 完整思维导图':'2026-09-21','外宣-线上招募接人SOP':'2026-09-23','外宣经纪人薪资与绩效政策（讨论稿）':'2026-09-23'
 };
+CREATED['外宣经纪人合作费用与招募激励办法']='2026-09-23';
 const cats=['全部','新增文档',...new Set(D.map(x=>x[0]))],filters=document.querySelector('#filters'),grid=document.querySelector('#grid'),search=document.querySelector('#search'),hint=document.querySelector('#hint'),empty=document.querySelector('#empty');let cat='全部';document.querySelector('#total').textContent=D.length;document.querySelector('#categoryCount').textContent=cats.length-1;
 cats.forEach(x=>{const b=document.createElement('button');b.className='filter'+(x==='全部'?' active':'');b.textContent=x;b.onclick=()=>{cat=x;document.querySelectorAll('.filter').forEach(z=>z.classList.toggle('active',z.textContent===x));render()};filters.appendChild(b)});
 function readRecord(url){try{return JSON.parse(localStorage.getItem('training-record:'+url)||'{}')}catch{return {}}}
