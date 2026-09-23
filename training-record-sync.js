@@ -172,12 +172,25 @@
       hasAccess = false;
       cloudRecords = Object.create(null);
       savedRows = Object.create(null);
-      status.textContent = '此邮箱尚未获得记录访问权限';
+      status.textContent = `当前登录：${session?.user?.email || '未知邮箱'} · 未授权`;
       loginToggle.hidden = false;
       logoutButton.hidden = !session;
       refreshButton.hidden = true;
       importButton.hidden = true;
-      accessHint.textContent = '该邮箱没有培训记录访问权限；请联系管理员加入 Supabase 白名单。';
+      accessHint.textContent = '当前登录邮箱没有培训记录访问权限；请确认登录邮箱与白名单一致。';
+      renderCurrent();
+    }
+
+    function setPermissionError(error) {
+      hasAccess = false;
+      cloudRecords = Object.create(null);
+      savedRows = Object.create(null);
+      status.textContent = `当前登录：${session?.user?.email || '未知邮箱'} · 权限检查失败`;
+      loginToggle.hidden = true;
+      logoutButton.hidden = false;
+      refreshButton.hidden = false;
+      importButton.hidden = true;
+      accessHint.textContent = `权限接口出错：${error.code || '未知错误'} · ${error.message || '请刷新重试'}`;
       renderCurrent();
     }
 
@@ -185,7 +198,8 @@
       if (!session) return setSignedOut();
       status.textContent = '正在验证邮箱权限…';
       const permission = await client.rpc('can_access_training_records');
-      if (permission.error || permission.data !== true) return setNoAccess();
+      if (permission.error) return setPermissionError(permission.error);
+      if (permission.data !== true) return setNoAccess();
 
       const result = await client.from('training_sessions')
         .select('id,document_url,training_time,participants')
