@@ -47,7 +47,7 @@
       return;
     }
     const footer = document.querySelector('.foot');
-    if (footer) footer.textContent = '资源来源：飞书云空间导航 · 培训记录仅授权邮箱登录后保存在 Supabase';
+    if (footer) footer.textContent = '资源来源：飞书云空间导航 · 培训备注公开可查看；仅授权邮箱可维护';
 
     const authBar = document.createElement('div');
     authBar.className = 'training-auth-bar';
@@ -66,13 +66,13 @@
       <label for="trainingEmail">授权邮箱</label>
       <input id="trainingEmail" type="email" autocomplete="email" placeholder="输入已加入白名单的邮箱">
       <button id="trainingSendLink" class="primary" type="button">发送登录链接</button>
-      <span id="trainingAuthMessage" class="training-auth-status" role="status" aria-live="polite">仅白名单邮箱可查看和维护培训记录。</span>`;
+      <span id="trainingAuthMessage" class="training-auth-status" role="status" aria-live="polite">任何访客均可查看培训备注；仅白名单邮箱可维护。</span>`;
     toolbar.insertAdjacentElement('afterend', panel);
 
     const accessHint = document.createElement('p');
     accessHint.className = 'training-access-hint';
     accessHint.id = 'trainingAccessHint';
-    accessHint.textContent = '文档导航公开可浏览；培训记录仅授权邮箱登录后可见。记录自动保存至 Supabase。';
+    accessHint.textContent = '培训时间和参与人员公开可见；新增、修改和删除记录需授权邮箱登录。';
     panel.insertAdjacentElement('afterend', accessHint);
 
     const status = document.getElementById('trainingAuthStatus');
@@ -92,6 +92,7 @@
     let session = null;
     let hasAccess = false;
     let cloudRecords = Object.create(null);
+    let publicRecords = Object.create(null);
     let savedRows = Object.create(null);
     const saveTimers = new Map();
 
@@ -147,7 +148,7 @@
     }
 
     // 覆盖旧版本地读写函数：展示数据来自云端；本地记录只用于用户主动导入。
-    window.readRecord = url => hasAccess ? (cloudRecords[url] || {}) : ({});
+    window.readRecord = url => hasAccess ? (cloudRecords[url] || {}) : (publicRecords[url] || {});
     window.saveRecord = (url, record) => {
       if (!hasAccess) return;
       cloudRecords[url] = safeClone(record);
@@ -155,7 +156,7 @@
     };
     window.render = renderCurrent;
 
-    function setSignedOut(text = '未登录：培训记录已隐藏') {
+    function setSignedOut(text = '访客模式：培训记录公开可见') {
       hasAccess = false;
       cloudRecords = Object.create(null);
       savedRows = Object.create(null);
@@ -164,7 +165,29 @@
       logoutButton.hidden = !session;
       refreshButton.hidden = true;
       importButton.hidden = true;
-      accessHint.textContent = '文档导航公开可浏览；培训记录仅授权邮箱登录后可见。';
+      accessHint.textContent = '培训时间和参与人员公开可见；新增、修改和删除记录需授权邮箱登录。';
+      renderCurrent();
+      loadPublicRows();
+    }
+
+    async function loadPublicRows() {
+      const result = await client.from('training_sessions')
+        .select('document_url,training_time,participants')
+        .order('training_time', { ascending: true });
+      if (result.error) {
+        publicRecords = Object.create(null);
+        status.textContent = '公开培训记录读取失败，请刷新页面重试';
+        accessHint.textContent = '培训记录暂时无法加载；请刷新页面或联系管理员。';
+        renderCurrent();
+        return;
+      }
+      publicRecords = Object.create(null);
+      for (const row of result.data || []) {
+        if (!publicRecords[row.document_url]) publicRecords[row.document_url] = { sessions: [] };
+        publicRecords[row.document_url].sessions.push({ time: row.training_time, people: row.participants || '' });
+      }
+      for (const value of Object.values(publicRecords)) value.sessions.sort((a, b) => a.time.localeCompare(b.time));
+      if (!session) status.textContent = `访客模式：已加载 ${result.data?.length || 0} 条公开培训记录`;
       renderCurrent();
     }
 
@@ -177,8 +200,9 @@
       logoutButton.hidden = !session;
       refreshButton.hidden = true;
       importButton.hidden = true;
-      accessHint.textContent = '当前登录邮箱没有培训记录访问权限；请确认登录邮箱与白名单一致。';
+      accessHint.textContent = '当前邮箱无编辑权限；仍可公开查看培训时间和参与人员。新增、修改和删除需使用授权邮箱登录。';
       renderCurrent();
+      loadPublicRows();
     }
 
     function setPermissionError(error) {
@@ -192,6 +216,7 @@
       importButton.hidden = true;
       accessHint.textContent = `权限接口出错：${error.code || '未知错误'} · ${error.message || '请刷新重试'}`;
       renderCurrent();
+      loadPublicRows();
     }
 
     async function loadRows() {
@@ -385,4 +410,3 @@
     renderCurrent();
   }
 })();
-
