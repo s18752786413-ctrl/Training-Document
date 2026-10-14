@@ -82,6 +82,15 @@
     const importButton = document.getElementById('trainingImport');
     const logoutButton = document.getElementById('trainingLogout');
     const sendLinkButton = document.getElementById('trainingSendLink');
+    // 登录失败片段不是有效凭证；保留公开查阅并提示重新获取邮件链接。
+    const authFragment = new URLSearchParams(location.hash.slice(1));
+    if (authFragment.has('error')) {
+      panel.hidden = false;
+      message.textContent = authFragment.get('error_code') === 'otp_expired'
+        ? '邮件登录链接已过期或已使用。请填写授权邮箱，重新发送登录链接，并打开最新邮件。无需登录也可查看培训记录。'
+        : '邮箱登录未完成，请重新发送登录链接。无需登录也可查看培训记录。';
+      history.replaceState(history.state, '', `${location.pathname}${location.search}`);
+    }
     const authUrl = 'https://ziwxqeqefyisxwvgrhdw.supabase.co';
     const publishableKey = 'sb_publishable_uJQTEEMJIF4h8Vj_9vS0wg_cMmbRTA5';
     const client = window.supabase.createClient(authUrl, publishableKey, {
@@ -350,14 +359,14 @@
       sendLinkButton.disabled = false;
       message.textContent = error
         ? `发送失败：${error.message}`
-        : '如果该邮箱已加入白名单，登录链接已发送。请查看邮箱并点击链接返回此网页；非白名单邮箱无法读取记录。';
+        : '登录链接已发送，请打开最新邮件中的链接；旧链接可能已失效。任何访客均可查看记录，仅白名单邮箱可维护。';
     });
 
     refreshButton.addEventListener('click', loadRows);
     logoutButton.addEventListener('click', async () => {
       await client.auth.signOut();
       session = null;
-      setSignedOut('已退出登录：培训记录已隐藏');
+      setSignedOut('已退出登录：仍可查看公开培训记录');
       panel.hidden = true;
     });
 

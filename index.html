@@ -11,70 +11,652 @@
 .card-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:12px}.record{width:205px;flex:none;border:1px solid var(--line);background:#fafbff;border-radius:10px;padding:8px;font-size:11px;color:var(--muted);position:relative}.session-count{font-size:12px;font-weight:700;color:#1d4ed8;margin-bottom:7px}.record label{display:flex;align-items:center;gap:4px;white-space:nowrap}.record label+label{margin-top:6px}.record input{width:100%;min-width:0;border:0;border-bottom:1px solid #d7dce7;background:transparent;padding:2px 3px;color:var(--ink);font:inherit;font-size:12px;outline:none}.record input:focus{border-color:var(--blue)}.record input:disabled{color:#9ca3af;cursor:not-allowed}.time-control{display:flex;align-items:center;flex:1;min-width:0}.time-control input{min-width:0}.time-toggle{border:0;background:transparent;color:#374151;cursor:pointer;font-size:16px;padding:0 3px}.session-menu{display:none;position:absolute;z-index:20;top:calc(100% + 5px);right:0;width:270px;max-width:min(270px,80vw);max-height:300px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 28px #17203326;padding:8px}.session-menu.open{display:block}.session-menu-title{font-size:12px;font-weight:700;color:var(--ink);padding:2px 3px 7px}.session-search{width:100%;border:1px solid var(--line)!important;border-radius:7px;padding:6px!important;margin-bottom:6px}.session-option{display:flex;align-items:center;gap:6px;border-bottom:1px solid #f0f1f5;padding:6px 2px}.session-option:last-child{border-bottom:0}.session-pick{flex:1;min-width:0;text-align:left;border:0;background:transparent;cursor:pointer;color:var(--ink);padding:3px}.session-pick span,.session-pick small{display:block;overflow-wrap:anywhere}.session-pick small{color:var(--muted);font-size:10px;margin-top:2px}.session-delete{border:0;border-radius:6px;background:#fff1f2;color:#be123c;cursor:pointer;padding:5px 7px;font-size:11px}.session-empty{padding:10px 4px;color:var(--muted);text-align:center}
 @media(max-width:600px){.wrap{padding:20px 14px 42px}.hero{padding:25px 22px;border-radius:20px}.hero h1{font-size:26px}.grid{grid-template-columns:1fr}}
 </style></head><body><main class="wrap">
-<section class="hero"><div class="eyebrow">外宣工作资料库 · FEISHU NAVIGATION</div><h1>外宣飞书文档导航</h1><p>把招聘、培训、流程、表格和部门资料集中到一个清晰入口。</p><div class="stats"><div class="stat"><b id="total">0</b>项资源</div><div class="stat"><b id="categoryCount">0</b>类资料</div><div class="stat"><b>2026.09</b>最近整理</div></div></section>
+<section class="hero"><div class="eyebrow">外宣工作资料库 · FEISHU NAVIGATION</div><h1>外宣飞书文档导航</h1><p>当前只招募抖音；招聘、培训、流程和表格集中查阅，停用资料标记为历史归档。</p><div class="stats"><div class="stat"><b id="total">0</b>项资源</div><div class="stat"><b id="categoryCount">0</b>类资料</div><div class="stat"><b>2026.10.14</b>最近整理</div></div></section>
 <section class="toolbar"><input id="search" class="search" placeholder="搜索文档名称、分类或备注…"><div id="filters" class="filters"></div></section><div id="hint" class="hint"></div><section id="grid" class="grid"></section><div id="empty" class="empty">没有找到匹配的文档，请换个关键词试试。</div><div class="foot">资源来源：飞书云空间导航 · 培训备注公开可查看；仅授权邮箱可维护</div>
-</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0"></script><script src="training-record-sync.js?v=public-read-20260924"></script><script>
+</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0"></script><script src="training-record-sync.js?v=20261014"></script><script>
 const D=[
-['公司介绍','原声力传媒公司介绍｜新人展示版','网页','V0.1；公司业务、已确认架构原图、支持条件、新人训练及对接安排','https://s18752786413-ctrl.github.io/Training-Document/company-introduction.html'],
-['招聘政策','线下主播待遇政策-外宣简版','文档','已归档至外宣部门/02_招聘口径与平台政策/02_岗位口径卡；当前重点使用，发布前复核保底及履约口径','https://acnvrrksd55h.feishu.cn/docx/CdvbdcahIoTWRwxeqUzcrvmen2d'],
-['招聘表格','直播招募登记','在线表格','外宣直播招募过程登记；链接定位到最近记录行','https://acnvrrksd55h.feishu.cn/sheets/Zc4isuVA2h3RFrtA4fDcRrX8n1f?sheet=182016&range=MTk6MTk='],
-['招聘表格','面试邀请名单','在线表格','近期有更新；链接定位到最新记录行','https://acnvrrksd55h.feishu.cn/sheets/Np2qsoIEMhPDnEtyb6FctKwVnzh?sheet=0sWuvO&range=ODI6ODI='],
-['招聘SOP','如何面试主播指导SOP','文档','当前版本；链接已按飞书最新锚点更新','https://acnvrrksd55h.feishu.cn/docx/Oku8dOsh9olbEEx6UkHc7KM6n6b#doxcnCFHcxuihuJGz6gJGeoNcXd'],
-['入职交接','外宣到面至入职全流程SOP','文档','当前重点使用','https://acnvrrksd55h.feishu.cn/docx/W1oCdduXlohuSjxgCXGcOiJknJj'],
-['入会SOP','如何邀请线上线下主播入会SOP','文档','已去除 V0.1 尾缀；当前保留版本','https://acnvrrksd55h.feishu.cn/docx/IoNgdvB65o7gW7xfuLZcshpHnsb'],
-['招聘SOP','外宣招人完整SOP','文档','当前初版/待评审','https://acnvrrksd55h.feishu.cn/docx/XUcIdn5UWoXHAJxyJj9c44gfnQd'],
-['招聘表格','厅管招聘面试表格','在线表格','迁移后表格；需继续核对工作表完整性','https://acnvrrksd55h.feishu.cn/sheets/Lty6sVzsbh0lf2tRDyfc9NaZnJh?sheet=2FcyNZ&range=NDo0'],
-['招聘表格','面试邀请名单','在线表格','近期使用；链接已按飞书最新行定位更新','https://acnvrrksd55h.feishu.cn/sheets/Np2qsoIEMhPDnEtyb6FctKwVnzh?sheet=0sWuvO&range=ODI6ODI='],
-['推人计划','各平台推人计划_企微迁移副本','在线表格','迁移副本','https://acnvrrksd55h.feishu.cn/sheets/YbBpsy9TLholVEt15recbNlNn3f?sheet=0ebmcW&range=NDo0'],
-['工作计划','外宣工作计划_企微迁移副本','在线表格','迁移副本','https://acnvrrksd55h.feishu.cn/sheets/YJb7srJUqh8G3etFVYpcgBPGnzu'],
-['平台培训','抖音接表单培训流程_待加入后复制','文档','待加入源文档后复制；暂作占位','https://acnvrrksd55h.feishu.cn/docx/XZ5LdxOmuoyF6AxAicMc0iVhnFb#doxcnTu17sTP9V0T4AaTavPRfWm'],
-['招聘SOP','外宣-线上招募接人SOP','文档','当前版本；已创建于“03_招聘SOP与流程/05_接表单”','https://acnvrrksd55h.feishu.cn/docx/Y8qSdYxloobHW9xl3xYcd9GKnxg'],
-['岗位职责','QA岗位记分卡 V0.5','文档','飞书当前标题为V0.5；最近版本摘要更新至V0.7，职责讨论稿、岗位指标口径待会长确认','https://acnvrrksd55h.feishu.cn/docx/I6hxdDOG4oowEmxd6sdcq6AEnNd'],
-['薪酬绩效','外宣经纪人合作费用与招募激励办法','文档','已同步本地V1.2正式稿；新增周任务完成奖励100元/周；基础合作费用及统计细则待确认','https://acnvrrksd55h.feishu.cn/docx/PMkCdwYUmoiBcwxpgARcOAY5nre'],
-['薪酬绩效','外宣经纪人合作费用与招募激励办法（经纪人查阅版）','文档','面向合作经纪人；新增周任务奖励及收入测算示例；待确认条款已标明','https://acnvrrksd55h.feishu.cn/docx/L80DdGaBpokOk9xW0Q6c91ZQnhb'],
-['设备培训','线下主播设备调试SOP','文档','已归档至外宣部门根目录；由《设备调试文档（线下主播）》复制创建','https://acnvrrksd55h.feishu.cn/docx/M2lgd7crtoV17jxdkfQcc4CRnwf'],
-['成本/财务','无标题文档_用途待确认','文档','标题和用途待确认','https://acnvrrksd55h.feishu.cn/docx/UJT0dcB4hoRbZCxPICdc5HiGnhc#doxcncDDMqLVS1Qtq5PETITCN2m'],
-['经验资料','外宣经验总结贴','文档','经验资料','https://acnvrrksd55h.feishu.cn/docx/Lea8dDcl2olAJAxLgc2cNBtlnHb'],
-['平台培训','UKI接表单培训流程_外宣专用版_20250830','文档','历史版本，日期较早','https://acnvrrksd55h.feishu.cn/docx/HLs2dakRjo8GRTxfJ5gcCyumnWf'],
-['对接SOP','外宣侧推人对接SOP','文档','流程资料','https://acnvrrksd55h.feishu.cn/docx/XLhudOsP5ovzukxv5VOcgU8gnJf'],
-['财务流程','话费报销流程','文档','财务流程','https://acnvrrksd55h.feishu.cn/docx/AOSUdkyvMo9TT8x1Ymvc8Elqn6R#doxcnWK7wwYbUNSZcpkZYydusCm'],
-['部门制度','外宣员工手册','文档','部门制度','https://acnvrrksd55h.feishu.cn/docx/ZYf1dkRZ2ocJ3Cxfkltcfg8bncf'],
-['登记表','每日完成的登记表','文档','登记记录/表单说明','https://acnvrrksd55h.feishu.cn/docx/HbFtdZ5AJot722xnPVdcyypEn9f#doxcnYd4oDA3dtfQ9yq66t66WQe'],
-['推人流程','外宣厅管推人流程','文档','流程资料','https://acnvrrksd55h.feishu.cn/docx/WsOJdVDBYoY0lXx5e1JcSMsCntg'],
-['招聘文案','线下不露脸语音厅聊天嘉宾招聘发布文案','文档','招聘发布文案','https://acnvrrksd55h.feishu.cn/docx/WUAKdRTjfoprN5xO9FYc42Orntb#doxcnECC5bx8UQG8RILCKxE5Cgh'],
-['招聘资料','招聘信息资料使用说明','文档','使用说明','https://acnvrrksd55h.feishu.cn/docx/I3UTdMiWLoWenSx69ntcVsPcnOf#doxcnywWw5B5OjwUbjrtc5C3xHc'],
-['平台培训','外宣招聘平台基础培训_抖音朵朵兔keke_V0.3.pptx','文件','上传文件；旧版','https://acnvrrksd55h.feishu.cn/file/OSvOb85DnouTBkxVqLrca0x2nRc'],
-['平台培训','外宣招聘平台基础培训_抖音朵朵兔keke_V0.2.pptx','文件','上传文件；旧版','https://acnvrrksd55h.feishu.cn/file/NsfTbDR4Uo94qWxrqPBc3VzTnTf'],
-['平台培训','外宣招聘平台基础培训模板_抖音朵朵兔keke_V0.1.pptx','文件','上传文件；模板','https://acnvrrksd55h.feishu.cn/file/PXcjbB7FFoYHhtxmxLscUgUhnef'],
-['行业培训','语音厅行业黑话词典','文档','培训资料','https://acnvrrksd55h.feishu.cn/docx/NlyedbiMOojVHqxo6DscDi4hnRh#doxcnepchf7anOLoIOyH1LIACYe'],
-['资料规划','外宣招聘平台基础培训PPT制作Plan','文档','制作规划','https://acnvrrksd55h.feishu.cn/docx/Pzd2dn85Qo7NOQxPWdBcpu4vnuc'],
-['平台培训','keke平台招聘培训内容整理','文档','培训内容整理','https://acnvrrksd55h.feishu.cn/docx/HxcWdnfEioowZMx5s8gczDLVnfc#doxcnVVVxmtV1s1m0h97xOtPtCb'],
-['平台培训','朵朵兔平台招聘培训内容整理','文档','培训内容整理','https://acnvrrksd55h.feishu.cn/docx/TrfWdJCa9oN2p9xN90CcKr7tnoe#doxcngqUAslpGrZFUX62DEbP7kb'],
-['平台培训','抖音平台招聘培训内容整理','文档','培训内容整理','https://acnvrrksd55h.feishu.cn/docx/KPfYd2jvhoySTxxdklwcfQiin0f#doxcn6Nqql21HrnRkbKpTasS7Qg'],
-['新人培训','新外宣7天岗前培训手册_V0.1','文档','培训手册','https://acnvrrksd55h.feishu.cn/docx/SUbod7ejqoyuT1x8QniciDvYnlf'],
-['招聘SOP','外宣招聘全流程SOP_V0.1旧版','文档','旧版','https://acnvrrksd55h.feishu.cn/docx/Cg9jdRdc7o1Xy1xAsXKcNXiwnrd'],
-['资料清单','外宣招聘SOP与培训资料体系清单','文档','资料体系清单','https://acnvrrksd55h.feishu.cn/docx/Tu61dllypo7LF0x9MJUcsbjtnHc'],
-['平台培训','外宣招聘平台基础培训_抖音朵朵兔keke_V0.4','幻灯片','当前幻灯片版本','https://acnvrrksd55h.feishu.cn/slides/S0Z6s3JkDlGIW5dK0UccGgc6nYc'],
-['平台培训','外宣招聘平台基础培训_抖音朵朵兔keke_V0.4.pptx','文件','上传文件；与幻灯片对应的源文件','https://acnvrrksd55h.feishu.cn/file/VZdNb45vGo8DkixIPJYchsXHnCg'],
-['工作计划','外宣部门每日工作计划','文档','工作计划','https://acnvrrksd55h.feishu.cn/docx/S9uLdF38Zo7J1WxO7JhcWuurnyf'],
-['迁移记录','外宣部门资料架构与执行口径确认记录_2026-09-11','文档','迁移/口径记录','https://acnvrrksd55h.feishu.cn/docx/ZVjfd3xYVo6gLixjCpdcc4Sgn4g'],
-['迁移记录','外宣资料迁移台账','文档','迁移台账','https://acnvrrksd55h.feishu.cn/docx/OkcudZnYWoATLAxlCDhcihhwnvb'],
-['目录','01_新外宣入职','文件夹','飞书目录','https://acnvrrksd55h.feishu.cn/drive/folder/NAgsf6zaDlBfmgdDzq7czPh1nYb'],
-['目录','08_外宣向厅管转交','文件夹','飞书目录','https://acnvrrksd55h.feishu.cn/drive/folder/NGpOfObR9lzStMd3Vrecm4zDnfe'],
-['目录','外宣部门','文件夹','外宣资料总目录','https://acnvrrksd55h.feishu.cn/drive/folder/T72zf4zjTlNBo0d7XztcNEvpnpd'],
-['新人培训','新人培训简易版','幻灯片','近期更新；标题未含外宣但搜索摘要命中','https://acnvrrksd55h.feishu.cn/slides/JRuRsVJBnlfTKDdRxzQc4It8nPg'],
-['对外宣讲','【对外宣讲】语音聊天室主播扶持任务_2026年8月起','文档','历史资料；来源为 bytedance.larkoffice.com','https://bytedance.larkoffice.com/docx/TBKRdrj1roIwRFxV4fHcbJumn7d'],
-['对外宣讲','【对外宣讲】语音聊天室主播扶持任务_2025年8月','文档','历史资料；来源为 bytedance.larkoffice.com','https://bytedance.larkoffice.com/docx/KRehdAF8MohOvXxaRIEcROcanJh'],
-['通用招聘培训','《聘谁》A级招聘法 · 完整思维导图','文件','已上传至“04_培训与考核/02_通用招聘培训”','https://acnvrrksd55h.feishu.cn/file/AS5DbojgRo8L2fxSiTOcM5OhnPd'],
-['新人培训','外宣-萌新入会培训材料','幻灯片','已上传至“04_培训与考核/01_新外宣入职”','https://acnvrrksd55h.feishu.cn/slides/NqCpsUnVRlbzHWdJtqCcccCNn5c'],
+  [
+    "公司介绍",
+    "公司介绍",
+    "文档",
+    "外宣部门/02_招聘口径与平台政策/01_公司介绍",
+    "https://acnvrrksd55h.feishu.cn/docx/Vq14dXnJNoZwGMxZ5pGcJch5n2b"
+  ],
+  [
+    "公司介绍",
+    "原声力传媒公司介绍｜新人展示版",
+    "网页",
+    "V0.1；公司业务、已确认架构原图、支持条件、新人训练及对接安排",
+    "https://s18752786413-ctrl.github.io/Training-Document/company-introduction.html"
+  ],
+  [
+    "招聘表格",
+    "外宣数据统计持续更新提示词.txt",
+    "文本文件",
+    "外宣部门/06_招聘运营台账/02_候选人总台账",
+    "https://acnvrrksd55h.feishu.cn/file/YOm7b33W7okMjKxVw9xcf3oinEd"
+  ],
+  [
+    "招聘表格",
+    "外宣数据统计_每日统一汇总版.xlsx",
+    "Excel文件",
+    "外宣部门/06_招聘运营台账/02_候选人总台账",
+    "https://acnvrrksd55h.feishu.cn/file/UY6yb18ObooB6ixdKhVc7buungg"
+  ],
+  [
+    "联系人与责任人",
+    "经纪人通联表",
+    "在线表格",
+    "外宣部门/00_部门总导航/03_联系人与责任人",
+    "https://acnvrrksd55h.feishu.cn/sheets/PPGEsBIHDhtBCktcT8vc41y6nPc"
+  ],
+  [
+    "招聘政策",
+    "外宣-内推政策",
+    "文档",
+    "外宣部门/02_招聘口径与平台政策/04_政策来源附件",
+    "https://acnvrrksd55h.feishu.cn/docx/FMCodMKynoWUTSx22ORcHcI1nse"
+  ],
+  [
+    "新人培训",
+    "外宣工作一本通 V0.2（初稿）",
+    "文档",
+    "外宣部门",
+    "https://acnvrrksd55h.feishu.cn/docx/TxbsdCOc9ombWKxAPFycAcyNnog"
+  ],
+  [
+    "招聘政策",
+    "线上线下主播待遇政策-外宣简版",
+    "文档",
+    "外宣部门/02_招聘口径与平台政策/02_岗位口径卡",
+    "https://acnvrrksd55h.feishu.cn/docx/CdvbdcahIoTWRwxeqUzcrvmen2d"
+  ],
+  [
+    "招聘表格",
+    "直播招募登记",
+    "在线表格",
+    "外宣部门/06_招聘运营台账/02_候选人总台账",
+    "https://acnvrrksd55h.feishu.cn/sheets/Zc4isuVA2h3RFrtA4fDcRrX8n1f?sheet=182016&range=MTk6MTk="
+  ],
+  [
+    "招聘表格",
+    "招募主播信息登记表",
+    "在线表格",
+    "外宣部门/06_招聘运营台账/02_候选人总台账",
+    "https://acnvrrksd55h.feishu.cn/sheets/Np2qsoIEMhPDnEtyb6FctKwVnzh?sheet=0sWuvO&range=ODI6ODI="
+  ],
+  [
+    "招聘SOP",
+    "如何面试线下主播指导SOP",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/09_面试通过与入职交接",
+    "https://acnvrrksd55h.feishu.cn/docx/Oku8dOsh9olbEEx6UkHc7KM6n6b#doxcnCFHcxuihuJGz6gJGeoNcXd"
+  ],
+  [
+    "入职交接",
+    "线下主播到面至入职全流程SOP",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/09_面试通过与入职交接",
+    "https://acnvrrksd55h.feishu.cn/docx/W1oCdduXlohuSjxgCXGcOiJknJj"
+  ],
+  [
+    "入会SOP",
+    "如何邀请线上线下主播入会SOP",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/09_面试通过与入职交接",
+    "https://acnvrrksd55h.feishu.cn/docx/IoNgdvB65o7gW7xfuLZcshpHnsb"
+  ],
+  [
+    "招聘SOP",
+    "外宣内容介绍一本通",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/01_招聘全流程",
+    "https://acnvrrksd55h.feishu.cn/docx/XUcIdn5UWoXHAJxyJj9c44gfnQd"
+  ],
+  [
+    "招聘表格",
+    "厅管招聘面试表格",
+    "在线表格",
+    "外宣部门/06_招聘运营台账/02_候选人总台账",
+    "https://acnvrrksd55h.feishu.cn/sheets/Lty6sVzsbh0lf2tRDyfc9NaZnJh?sheet=2FcyNZ&range=NDo0"
+  ],
+  [
+    "历史归档",
+    "（废）推人计划",
+    "在线表格",
+    "历史/停用资料，不作为当前执行依据；外宣部门/06_招聘运营台账/01_招聘需求",
+    "https://acnvrrksd55h.feishu.cn/sheets/YbBpsy9TLholVEt15recbNlNn3f?sheet=0ebmcW&range=NDo0"
+  ],
+  [
+    "历史归档",
+    "（废）外宣工作计划_企微迁移副本",
+    "在线表格",
+    "历史/停用资料，不作为当前执行依据；外宣部门/01_部门制度与职责/03_每日工作标准",
+    "https://acnvrrksd55h.feishu.cn/sheets/YJb7srJUqh8G3etFVYpcgBPGnzu"
+  ],
+  [
+    "平台培训",
+    "抖音接表单培训流程_待加入后复制",
+    "文档",
+    "待加入源文档后复制；暂作占位",
+    "https://acnvrrksd55h.feishu.cn/docx/XZ5LdxOmuoyF6AxAicMc0iVhnFb#doxcnTu17sTP9V0T4AaTavPRfWm"
+  ],
+  [
+    "招聘SOP",
+    "外宣-线上招募接人SOP",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/05_接表单",
+    "https://acnvrrksd55h.feishu.cn/docx/Y8qSdYxloobHW9xl3xYcd9GKnxg"
+  ],
+  [
+    "岗位职责",
+    "QA岗位记分卡 V0.5",
+    "文档",
+    "飞书当前标题为V0.5；最近版本摘要更新至V0.7，职责讨论稿、岗位指标口径待会长确认",
+    "https://acnvrrksd55h.feishu.cn/docx/I6hxdDOG4oowEmxd6sdcq6AEnNd"
+  ],
+  [
+    "薪酬绩效",
+    "外宣经纪人合作费用与招募激励办法",
+    "文档",
+    "外宣部门/01_部门制度与职责/06_绩效奖惩口径",
+    "https://acnvrrksd55h.feishu.cn/docx/L80DdGaBpokOk9xW0Q6c91ZQnhb"
+  ],
+  [
+    "设备培训",
+    "线下主播设备调试SOP",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/09_面试通过与入职交接",
+    "https://acnvrrksd55h.feishu.cn/docx/M2lgd7crtoV17jxdkfQcc4CRnwf"
+  ],
+  [
+    "历史归档",
+    "无标题文档_用途待确认",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/99_历史归档/08_无标题与用途待确认",
+    "https://acnvrrksd55h.feishu.cn/docx/UJT0dcB4hoRbZCxPICdc5HiGnhc#doxcncDDMqLVS1Qtq5PETITCN2m"
+  ],
+  [
+    "经验资料",
+    "（待优化）外宣经验总结贴",
+    "文档",
+    "待审核/优化，使用前复核；外宣部门/04_培训与考核/06_案例与经验",
+    "https://acnvrrksd55h.feishu.cn/docx/Lea8dDcl2olAJAxLgc2cNBtlnHb"
+  ],
+  [
+    "历史归档",
+    "UKI接表单培训流程_外宣专用版_20250830",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/99_历史归档/03_历史平台资料",
+    "https://acnvrrksd55h.feishu.cn/docx/HLs2dakRjo8GRTxfJ5gcCyumnWf"
+  ],
+  [
+    "历史归档",
+    "(废）外宣侧推人对接SOP",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/03_招聘SOP与流程/08_外宣向厅管转交SOP",
+    "https://acnvrrksd55h.feishu.cn/docx/XLhudOsP5ovzukxv5VOcgU8gnJf"
+  ],
+  [
+    "财务流程",
+    "话费报销流程",
+    "文档",
+    "外宣部门/01_部门制度与职责/05_费用报销",
+    "https://acnvrrksd55h.feishu.cn/docx/AOSUdkyvMo9TT8x1Ymvc8Elqn6R#doxcnWK7wwYbUNSZcpkZYydusCm"
+  ],
+  [
+    "部门制度",
+    "外宣员工手册",
+    "文档",
+    "外宣部门/01_部门制度与职责/01_员工手册",
+    "https://acnvrrksd55h.feishu.cn/docx/ZYf1dkRZ2ocJ3Cxfkltcfg8bncf"
+  ],
+  [
+    "登记表",
+    "每日完成的登记表",
+    "文档",
+    "外宣部门/06_招聘运营台账/06_日报",
+    "https://acnvrrksd55h.feishu.cn/docx/HbFtdZ5AJot722xnPVdcyypEn9f#doxcnYd4oDA3dtfQ9yq66t66WQe"
+  ],
+  [
+    "推人流程",
+    "外宣招聘厅管/运营推人流程SOP",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/08_外宣向厅管转交SOP/外宣招聘厅管",
+    "https://acnvrrksd55h.feishu.cn/docx/WsOJdVDBYoY0lXx5e1JcSMsCntg"
+  ],
+  [
+    "招聘文案",
+    "线下不露脸语音厅聊天嘉宾招聘发布文案",
+    "文档",
+    "外宣部门/05_招聘宣传素材/01_当前在用素材",
+    "https://acnvrrksd55h.feishu.cn/docx/WUAKdRTjfoprN5xO9FYc42Orntb#doxcnECC5bx8UQG8RILCKxE5Cgh"
+  ],
+  [
+    "招聘资料",
+    "招聘信息资料使用说明",
+    "文档",
+    "外宣部门/05_招聘宣传素材/01_当前在用素材",
+    "https://acnvrrksd55h.feishu.cn/docx/I3UTdMiWLoWenSx69ntcVsPcnOf#doxcnywWw5B5OjwUbjrtc5C3xHc"
+  ],
+  [
+    "历史归档",
+    "外宣招聘平台基础培训_抖音朵朵兔keke_V0.3.pptx",
+    "文件",
+    "历史/停用资料，不作为当前执行依据；外宣部门/99_历史归档/04_旧版培训PPT",
+    "https://acnvrrksd55h.feishu.cn/file/OSvOb85DnouTBkxVqLrca0x2nRc"
+  ],
+  [
+    "历史归档",
+    "外宣招聘平台基础培训_抖音朵朵兔keke_V0.2.pptx",
+    "文件",
+    "历史/停用资料，不作为当前执行依据；外宣部门/99_历史归档/04_旧版培训PPT",
+    "https://acnvrrksd55h.feishu.cn/file/NsfTbDR4Uo94qWxrqPBc3VzTnTf"
+  ],
+  [
+    "历史归档",
+    "外宣招聘平台基础培训模板_抖音朵朵兔keke_V0.1.pptx",
+    "文件",
+    "历史/停用资料，不作为当前执行依据；外宣部门/99_历史归档/04_旧版培训PPT",
+    "https://acnvrrksd55h.feishu.cn/file/PXcjbB7FFoYHhtxmxLscUgUhnef"
+  ],
+  [
+    "行业培训",
+    "语音厅行业黑话词典",
+    "文档",
+    "外宣部门/04_培训与考核/02_通用招聘培训",
+    "https://acnvrrksd55h.feishu.cn/docx/NlyedbiMOojVHqxo6DscDi4hnRh#doxcnepchf7anOLoIOyH1LIACYe"
+  ],
+  [
+    "资料规划",
+    "外宣招聘平台基础培训PPT制作Plan",
+    "文档",
+    "外宣部门/04_培训与考核/03_平台培训",
+    "https://acnvrrksd55h.feishu.cn/docx/Pzd2dn85Qo7NOQxPWdBcpu4vnuc"
+  ],
+  [
+    "历史归档",
+    "keke平台招聘培训内容整理",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/02_招聘口径与平台政策/03_平台政策/（废）keke",
+    "https://acnvrrksd55h.feishu.cn/docx/HxcWdnfEioowZMx5s8gczDLVnfc#doxcnVVVxmtV1s1m0h97xOtPtCb"
+  ],
+  [
+    "历史归档",
+    "朵朵兔平台招聘培训内容整理",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/02_招聘口径与平台政策/03_平台政策/（废）朵朵兔",
+    "https://acnvrrksd55h.feishu.cn/docx/TrfWdJCa9oN2p9xN90CcKr7tnoe#doxcngqUAslpGrZFUX62DEbP7kb"
+  ],
+  [
+    "历史归档",
+    "（废）抖音平台招聘培训内容整理",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/02_招聘口径与平台政策/03_平台政策/抖音",
+    "https://acnvrrksd55h.feishu.cn/docx/KPfYd2jvhoySTxxdklwcfQiin0f#doxcn6Nqql21HrnRkbKpTasS7Qg"
+  ],
+  [
+    "历史归档",
+    "（废）新外宣7天岗前培训手册_V0.1",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/04_培训与考核/01_新外宣入职",
+    "https://acnvrrksd55h.feishu.cn/docx/SUbod7ejqoyuT1x8QniciDvYnlf"
+  ],
+  [
+    "历史归档",
+    "外宣招聘全流程SOP_V0.1旧版",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/99_历史归档/05_旧版SOP",
+    "https://acnvrrksd55h.feishu.cn/docx/Cg9jdRdc7o1Xy1xAsXKcNXiwnrd"
+  ],
+  [
+    "历史归档",
+    "（废）外宣招聘SOP与培训资料体系清单",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/00_部门总导航/05_待确认清单",
+    "https://acnvrrksd55h.feishu.cn/docx/Tu61dllypo7LF0x9MJUcsbjtnHc"
+  ],
+  [
+    "历史归档",
+    "【历史资料-外站已停招】外宣招聘平台基础培训_抖音朵朵兔keke_V0.4",
+    "幻灯片",
+    "历史/停用资料，不作为当前执行依据；外宣部门/04_培训与考核/03_平台培训",
+    "https://acnvrrksd55h.feishu.cn/slides/S0Z6s3JkDlGIW5dK0UccGgc6nYc"
+  ],
+  [
+    "历史归档",
+    "【历史资料-外站已停招】外宣招聘平台基础培训_抖音朵朵兔keke_V0.4.pptx",
+    "文件",
+    "历史/停用资料，不作为当前执行依据；外宣部门/04_培训与考核/03_平台培训",
+    "https://acnvrrksd55h.feishu.cn/file/VZdNb45vGo8DkixIPJYchsXHnCg"
+  ],
+  [
+    "历史归档",
+    "（废）外宣部门每日工作计划",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/01_部门制度与职责/03_每日工作标准",
+    "https://acnvrrksd55h.feishu.cn/docx/S9uLdF38Zo7J1WxO7JhcWuurnyf"
+  ],
+  [
+    "迁移记录",
+    "外宣部门资料架构与执行口径确认记录_2026-09-11",
+    "文档",
+    "外宣部门/00_部门总导航/02_当前在用清单",
+    "https://acnvrrksd55h.feishu.cn/docx/ZVjfd3xYVo6gLixjCpdcc4Sgn4g"
+  ],
+  [
+    "历史归档",
+    "（废）外宣资料迁移台账",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/00_部门总导航/01_资料总导航",
+    "https://acnvrrksd55h.feishu.cn/docx/OkcudZnYWoATLAxlCDhcihhwnvb"
+  ],
+  [
+    "目录",
+    "01_新外宣入职",
+    "文件夹",
+    "外宣部门/04_培训与考核",
+    "https://acnvrrksd55h.feishu.cn/drive/folder/NAgsf6zaDlBfmgdDzq7czPh1nYb"
+  ],
+  [
+    "目录",
+    "08_外宣向厅管转交SOP",
+    "文件夹",
+    "外宣部门/03_招聘SOP与流程",
+    "https://acnvrrksd55h.feishu.cn/drive/folder/NGpOfObR9lzStMd3Vrecm4zDnfe"
+  ],
+  [
+    "目录",
+    "外宣部门",
+    "文件夹",
+    "外宣资料总目录",
+    "https://acnvrrksd55h.feishu.cn/drive/folder/T72zf4zjTlNBo0d7XztcNEvpnpd"
+  ],
+  [
+    "新人培训",
+    "新人培训简易版",
+    "幻灯片",
+    "近期更新；标题未含外宣但搜索摘要命中",
+    "https://acnvrrksd55h.feishu.cn/slides/JRuRsVJBnlfTKDdRxzQc4It8nPg"
+  ],
+  [
+    "对外宣讲",
+    "【对外宣讲】语音聊天室主播扶持任务_2026年8月起",
+    "文档",
+    "历史资料；来源为 bytedance.larkoffice.com",
+    "https://bytedance.larkoffice.com/docx/TBKRdrj1roIwRFxV4fHcbJumn7d"
+  ],
+  [
+    "对外宣讲",
+    "【对外宣讲】语音聊天室主播扶持任务_2025年8月",
+    "文档",
+    "历史资料；来源为 bytedance.larkoffice.com",
+    "https://bytedance.larkoffice.com/docx/KRehdAF8MohOvXxaRIEcROcanJh"
+  ],
+  [
+    "通用招聘培训",
+    "《聘谁》A级招聘法 · 完整思维导图.pdf",
+    "文件",
+    "外宣部门/04_培训与考核/02_通用招聘培训",
+    "https://acnvrrksd55h.feishu.cn/file/AS5DbojgRo8L2fxSiTOcM5OhnPd"
+  ],
+  [
+    "新人培训",
+    "外宣-萌新主播入会培训材料",
+    "幻灯片",
+    "外宣部门/04_培训与考核/01_新外宣入职",
+    "https://acnvrrksd55h.feishu.cn/slides/NqCpsUnVRlbzHWdJtqCcccCNn5c"
+  ],
+  [
+    "资料导航",
+    "外宣工作一本通",
+    "文档",
+    "外宣部门",
+    "https://acnvrrksd55h.feishu.cn/docx/LWzRdVGb8o1xIsxdXuLclA1tnEb"
+  ],
+  [
+    "历史归档",
+    "（废）keke福利政策参考图.png",
+    "文件",
+    "历史/停用资料，不作为当前执行依据；外宣部门/02_招聘口径与平台政策/04_政策来源附件",
+    "https://acnvrrksd55h.feishu.cn/file/OqQjbjkt9oLVv4xnFZUcRmpPn8d"
+  ],
+  [
+    "历史归档",
+    "（废）朵朵兔福利政策参考图.jpg",
+    "文件",
+    "历史/停用资料，不作为当前执行依据；外宣部门/02_招聘口径与平台政策/04_政策来源附件",
+    "https://acnvrrksd55h.feishu.cn/file/Nn8mbyiOGo7KkexShqvciORbnfh"
+  ],
+  [
+    "招聘政策",
+    "抖音线上保底政策参考图.png",
+    "文件",
+    "外宣部门/02_招聘口径与平台政策/04_政策来源附件",
+    "https://acnvrrksd55h.feishu.cn/file/WFmWbjCXWodMTrx82M6cA62qnTX"
+  ],
+  [
+    "招聘政策",
+    "抖音六大核心扶持宣传图.png",
+    "文件",
+    "外宣部门/02_招聘口径与平台政策/04_政策来源附件",
+    "https://acnvrrksd55h.feishu.cn/file/MdgobSbtuoCeGzxElVPc4F3jnPg"
+  ],
+  [
+    "招聘政策",
+    "抖音福利政策参考图.png",
+    "文件",
+    "外宣部门/02_招聘口径与平台政策/04_政策来源附件",
+    "https://acnvrrksd55h.feishu.cn/file/JNKwbu8T8o6r02xFs7VcOrj5n6d"
+  ],
+  [
+    "招聘SOP",
+    "电话邀约面试流程SOP",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/06_面试邀约",
+    "https://acnvrrksd55h.feishu.cn/docx/DDmxdTkJboRxXIx8mp0cbmannVw"
+  ],
+  [
+    "招聘SOP",
+    "直播间开播准备清单",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/09_面试通过与入职交接",
+    "https://acnvrrksd55h.feishu.cn/docx/Q1o5dqHIAogohHxfcq1c03nJnWg"
+  ],
+  [
+    "招聘SOP",
+    "企微发送名片SOP",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/08_外宣向厅管转交SOP",
+    "https://acnvrrksd55h.feishu.cn/docx/CAxVdUddJoPcT0xrS82cgGmGnMe"
+  ],
+  [
+    "招聘SOP",
+    "视频招募SOP",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/01_招聘全流程",
+    "https://acnvrrksd55h.feishu.cn/docx/GS6od7GE7oSOs6xrwyvcwzgVn4y"
+  ],
+  [
+    "招聘表格",
+    "每周绩效展示_企微迁移副本",
+    "在线表格",
+    "外宣部门/06_招聘运营台账/07_周报",
+    "https://acnvrrksd55h.feishu.cn/sheets/G3QosAZlehVWJ3tXBXLcVoHTnjd"
+  ],
+  [
+    "历史归档",
+    "（废）BOSS经验总结_企微迁移副本",
+    "在线表格",
+    "历史/停用资料，不作为当前执行依据；外宣部门/06_招聘运营台账/03_渠道线索",
+    "https://acnvrrksd55h.feishu.cn/sheets/RnePsZy55hBUEBtVlm7cmj24npb"
+  ],
+  [
+    "招聘活动",
+    "线下招聘方案策划",
+    "文档",
+    "外宣部门/08_招聘活动与方案/03_线下招聘活动",
+    "https://acnvrrksd55h.feishu.cn/docx/HzZ7dWZQSoU4YDxUQAIcC3Udn6f"
+  ],
+  [
+    "招聘活动",
+    "12月31日线下招募活动策划",
+    "文档",
+    "外宣部门/08_招聘活动与方案/03_线下招聘活动",
+    "https://acnvrrksd55h.feishu.cn/docx/BWJqdEbHJoHNp6xvMoRcdp3UnTb"
+  ],
+  [
+    "历史归档",
+    "关于UKI接表单流程以及注意事项的培训内容",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/99_历史归档/03_历史平台资料",
+    "https://acnvrrksd55h.feishu.cn/docx/Zqo1dNBORocmgpxPJhsc9cAWnid"
+  ],
+  [
+    "历史归档",
+    "UKI接表单话术技巧参考",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/99_历史归档/03_历史平台资料",
+    "https://acnvrrksd55h.feishu.cn/docx/PWP4dSTVRomqgrxdyxhcoZ1pntc"
+  ],
+  [
+    "培训与考核",
+    "（待优化）针对已读不回和消息未读攻略",
+    "文档",
+    "待审核/优化，使用前复核；外宣部门/04_培训与考核/05_话术与异议处理",
+    "https://acnvrrksd55h.feishu.cn/docx/I2a2dZLTEoZVYMxQXIucFIhsnyd"
+  ],
+  [
+    "宣传素材",
+    "原声力传媒_微信二维码原图.png",
+    "文件",
+    "外宣部门/05_招聘宣传素材/06_原始素材",
+    "https://acnvrrksd55h.feishu.cn/file/CXtjbtD1noclRRxqNG1czKhmnDe"
+  ],
+  [
+    "宣传素材",
+    "原声力传媒_微信宣传图_A版黑金商务风_语音厅公会.png",
+    "文件",
+    "外宣部门/05_招聘宣传素材/01_当前在用素材",
+    "https://acnvrrksd55h.feishu.cn/file/KLeUbZklOoldKVxUqxkc693rnFd"
+  ],
+  [
+    "宣传素材",
+    "原声力传媒_六大核心扶持宣传图_微信咨询版.png",
+    "文件",
+    "外宣部门/05_招聘宣传素材/01_当前在用素材",
+    "https://acnvrrksd55h.feishu.cn/file/Nc8MbT2IYocaYhxr4UjcyQo9nqP"
+  ],
+  [
+    "宣传素材",
+    "菁英引荐专项激励_线上奖励调整版.png",
+    "文件",
+    "外宣部门/05_招聘宣传素材/01_当前在用素材",
+    "https://acnvrrksd55h.feishu.cn/file/Hnh5bCgBSogzuUxqgsCcQfoxnue"
+  ],
+  [
+    "宣传素材",
+    "急招厅管1名_朋友圈最终版.png",
+    "文件",
+    "外宣部门/05_招聘宣传素材/01_当前在用素材",
+    "https://acnvrrksd55h.feishu.cn/file/O5FlblE27ozL8LxMDu8c9OLsnHd"
+  ],
+  [
+    "宣传素材",
+    "抖音平台厅管招募_朋友圈文案",
+    "文档",
+    "外宣部门/05_招聘宣传素材/01_当前在用素材",
+    "https://acnvrrksd55h.feishu.cn/docx/SB4gdce5rouUfxx6hOjc2g10nve"
+  ],
+  [
+    "宣传素材",
+    "原声力传媒_微信宣传图_C版紫蓝潮流风.png",
+    "文件",
+    "待审核/优化，使用前复核；外宣部门/05_招聘宣传素材/07_待审核",
+    "https://acnvrrksd55h.feishu.cn/file/MRV5bsEbmojTUmxAIC9c10cVnIu"
+  ],
+  [
+    "宣传素材",
+    "原声力传媒_微信宣传图_B版蓝白科技风.png",
+    "文件",
+    "待审核/优化，使用前复核；外宣部门/05_招聘宣传素材/07_待审核",
+    "https://acnvrrksd55h.feishu.cn/file/RSjHbg9ikoyLQkxSMYncKm2nnDf"
+  ],
+  [
+    "宣传素材",
+    "原声力传媒_微信宣传图_A版黑金商务风.png",
+    "文件",
+    "待审核/优化，使用前复核；外宣部门/05_招聘宣传素材/07_待审核",
+    "https://acnvrrksd55h.feishu.cn/file/WjzhbZpUtoXVjYxeR0Ncxnnenth"
+  ],
+  [
+    "宣传素材",
+    "原声力传媒_六大核心扶持宣传图_朋友圈版.png",
+    "文件",
+    "待审核/优化，使用前复核；外宣部门/05_招聘宣传素材/07_待审核",
+    "https://acnvrrksd55h.feishu.cn/file/PqPgbLOI9oIO3Exd9uOcuO19nMf"
+  ],
+  [
+    "宣传素材",
+    "原声力传媒_公会优势宣传图_朋友圈版.png",
+    "文件",
+    "待审核/优化，使用前复核；外宣部门/05_招聘宣传素材/07_待审核",
+    "https://acnvrrksd55h.feishu.cn/file/YL9rbEudAoDqpvx1jo1cLFjRnDf"
+  ],
+  [
+    "宣传素材",
+    "抖音平台厅管招募_朋友圈版.png",
+    "文件",
+    "待审核/优化，使用前复核；外宣部门/05_招聘宣传素材/07_待审核",
+    "https://acnvrrksd55h.feishu.cn/file/NkJub1DzkoRN8sxcrEocAYdyn9m"
+  ],
+  [
+    "历史归档",
+    "菁英引荐专项激励_去水印版.png",
+    "文件",
+    "历史/停用资料，不作为当前执行依据；外宣部门/05_招聘宣传素材/08_已停用",
+    "https://acnvrrksd55h.feishu.cn/file/JJMnbjL1XoCzxjxvavqcr0CWnhf"
+  ],
+  [
+    "历史归档",
+    "急招厅管1名_朋友圈版_v2.png",
+    "文件",
+    "历史/停用资料，不作为当前执行依据；外宣部门/05_招聘宣传素材/08_已停用",
+    "https://acnvrrksd55h.feishu.cn/file/Vwxqbgqn5oxHa1xTm1DckjWgnHc"
+  ],
+  [
+    "历史归档",
+    "（废）抖音线下执行手册_公司指定版本",
+    "文档",
+    "历史/停用资料，不作为当前执行依据；外宣部门/02_招聘口径与平台政策/03_平台政策/抖音",
+    "https://acnvrrksd55h.feishu.cn/docx/V6w6d4YA1ocvRkxBucrcS60pnvb"
+  ],
+  [
+    "部门制度",
+    "外宣每日工作流程",
+    "文档",
+    "外宣部门/01_部门制度与职责/03_每日工作标准/每日工作流程",
+    "https://acnvrrksd55h.feishu.cn/docx/DJsjdhLzHor7Qex8S1ucxtewnwg"
+  ],
+  [
+    "招聘SOP",
+    "BOSS直聘新账号SOP",
+    "文档",
+    "外宣部门/03_招聘SOP与流程/03_渠道发布/BOSS直聘",
+    "https://acnvrrksd55h.feishu.cn/docx/TcaKdnxnTojM4jxlf9WcKwChneg"
+  ]
 ];
 const CREATED={
-'线下主播待遇政策-外宣简版':'2026-09-19','如何面试主播指导SOP':'2026-09-17','外宣到面至入职全流程SOP':'2026-09-17','如何邀请线上线下主播入会SOP':'2026-09-17','外宣招人完整SOP':'2026-09-13','厅管招聘面试表格':'2026-09-13','面试邀请名单':'2026-09-13','各平台推人计划_企微迁移副本':'2026-09-13','外宣工作计划_企微迁移副本':'2026-09-13','抖音接表单培训流程_待加入后复制':'2026-09-13','无标题文档_用途待确认':'2026-09-12','外宣经验总结贴':'2026-09-12','UKI接表单培训流程_外宣专用版_20250830':'2026-09-12','外宣侧推人对接SOP':'2026-09-12','话费报销流程':'2026-09-12','外宣员工手册':'2026-09-12','每日完成的登记表':'2026-09-12','外宣厅管推人流程':'2026-09-12','线下不露脸语音厅聊天嘉宾招聘发布文案':'2026-09-12','招聘信息资料使用说明':'2026-09-12','外宣招聘平台基础培训_抖音朵朵兔keke_V0.3.pptx':'2026-09-12','外宣招聘平台基础培训_抖音朵朵兔keke_V0.2.pptx':'2026-09-12','外宣招聘平台基础培训模板_抖音朵朵兔keke_V0.1.pptx':'2026-09-12','语音厅行业黑话词典':'2026-09-12','外宣招聘平台基础培训PPT制作Plan':'2026-09-12','keke平台招聘培训内容整理':'2026-09-12','朵朵兔平台招聘培训内容整理':'2026-09-12','抖音平台招聘培训内容整理':'2026-09-12','新外宣7天岗前培训手册_V0.1':'2026-09-12','外宣招聘全流程SOP_V0.1旧版':'2026-09-12','外宣招聘SOP与培训资料体系清单':'2026-09-12','外宣招聘平台基础培训_抖音朵朵兔keke_V0.4':'2026-09-12','外宣招聘平台基础培训_抖音朵朵兔keke_V0.4.pptx':'2026-09-12','外宣部门每日工作计划':'2026-09-12','外宣部门资料架构与执行口径确认记录_2026-09-11':'2026-09-12','外宣资料迁移台账':'2026-09-12','01_新外宣入职':'2026-09-12','08_外宣向厅管转交':'2026-09-12','外宣部门':'2026-09-12','新人培训简易版':'2026-09-06','【对外宣讲】语音聊天室主播扶持任务_2026年8月起':'2025-08-26','【对外宣讲】语音聊天室主播扶持任务_2025年8月':'2025-06-28','《聘谁》A级招聘法 · 完整思维导图':'2026-09-21','外宣-线上招募接人SOP':'2026-09-23','外宣经纪人薪资与绩效政策（讨论稿）':'2026-09-23'
+'外宣数据统计持续更新提示词.txt':'2026-10-10',
+'外宣数据统计_每日统一汇总版.xlsx':'2026-10-10',
+'外宣-内推政策':'2026-10-07',
+'线上线下主播待遇政策-外宣简版':'2026-09-19','如何面试主播指导SOP':'2026-09-17','外宣到面至入职全流程SOP':'2026-09-17','如何邀请线上线下主播入会SOP':'2026-10-11','外宣招人完整SOP':'2026-09-13','厅管招聘面试表格':'2026-09-13','面试邀请名单':'2026-09-13','各平台推人计划_企微迁移副本':'2026-09-13','外宣工作计划_企微迁移副本':'2026-09-13','抖音接表单培训流程_待加入后复制':'2026-09-13','无标题文档_用途待确认':'2026-09-12','外宣经验总结贴':'2026-09-12','UKI接表单培训流程_外宣专用版_20250830':'2026-09-12','外宣侧推人对接SOP':'2026-09-12','话费报销流程':'2026-09-12','外宣员工手册':'2026-09-12','每日完成的登记表':'2026-09-12','外宣厅管推人流程':'2026-09-12','线下不露脸语音厅聊天嘉宾招聘发布文案':'2026-09-12','招聘信息资料使用说明':'2026-09-12','外宣招聘平台基础培训_抖音朵朵兔keke_V0.3.pptx':'2026-09-12','外宣招聘平台基础培训_抖音朵朵兔keke_V0.2.pptx':'2026-09-12','外宣招聘平台基础培训模板_抖音朵朵兔keke_V0.1.pptx':'2026-09-12','语音厅行业黑话词典':'2026-09-12','外宣招聘平台基础培训PPT制作Plan':'2026-10-09','keke平台招聘培训内容整理':'2026-10-09','朵朵兔平台招聘培训内容整理':'2026-10-09','抖音平台招聘培训内容整理':'2026-09-12','新外宣7天岗前培训手册_V0.1':'2026-09-12','外宣招聘全流程SOP_V0.1旧版':'2026-10-09','外宣招聘SOP与培训资料体系清单':'2026-09-12','【历史资料-外站已停招】外宣招聘平台基础培训_抖音朵朵兔keke_V0.4':'2026-10-09','【历史资料-外站已停招】外宣招聘平台基础培训_抖音朵朵兔keke_V0.4.pptx':'2026-10-09','外宣部门每日工作计划':'2026-09-12','外宣部门资料架构与执行口径确认记录_2026-09-11':'2026-10-09','外宣资料迁移台账':'2026-09-12','01_新外宣入职':'2026-09-12','08_外宣向厅管转交':'2026-09-12','外宣部门':'2026-09-12','新人培训简易版':'2026-09-06','【对外宣讲】语音聊天室主播扶持任务_2026年8月起':'2025-08-26','【对外宣讲】语音聊天室主播扶持任务_2025年8月':'2025-06-28','《聘谁》A级招聘法 · 完整思维导图':'2026-09-21','外宣-线上招募接人SOP':'2026-10-09','外宣经纪人薪资与绩效政策（讨论稿）':'2026-09-23'
 };
 CREATED['外宣经纪人合作费用与招募激励办法（经纪人查阅版）']='2026-09-24';
 CREATED['外宣-萌新入会培训材料']='2026-09-24';
 CREATED['线下主播设备调试SOP']='2026-09-28';
 CREATED['外宣经纪人合作费用与招募激励办法']='2026-09-23';
+Object.assign(CREATED,{"外宣工作一本通":"2026-10-09","外宣工作一本通 V0.2（初稿）":"2026-10-07","08_外宣向厅管转交SOP":"2026-09-11","01_新外宣入职":"2026-09-11","公司介绍":"2026-09-11","线上线下主播待遇政策-外宣简版":"2026-09-19","（废）keke福利政策参考图.png":"2026-09-11","（废）朵朵兔福利政策参考图.jpg":"2026-09-11","外宣-内推政策":"2026-10-07","抖音线上保底政策参考图.png":"2026-09-11","抖音六大核心扶持宣传图.png":"2026-09-11","抖音福利政策参考图.png":"2026-09-11","外宣-线上招募接人SOP":"2026-09-23","电话邀约面试流程SOP":"2026-09-11","直播间开播准备清单":"2026-10-11","线下主播到面至入职全流程SOP":"2026-09-17","如何邀请线上线下主播入会SOP":"2026-09-16","如何面试线下主播指导SOP":"2026-09-17","线下主播设备调试SOP":"2026-09-28","(废）外宣侧推人对接SOP":"2026-09-11","企微发送名片SOP":"2026-09-11","外宣招聘厅管/运营推人流程SOP":"2026-09-11","外宣内容介绍一本通":"2026-09-12","视频招募SOP":"2026-10-05","（废）外宣工作计划_企微迁移副本":"2026-09-12","（废）外宣部门每日工作计划":"2026-09-11","外宣员工手册":"2026-09-11","外宣经纪人合作费用与招募激励办法":"2026-09-24","话费报销流程":"2026-09-11","每周绩效展示_企微迁移副本":"2026-09-12","招募主播信息登记表":"2026-09-12","外宣数据统计持续更新提示词.txt":"2026-10-10","外宣数据统计_每日统一汇总版.xlsx":"2026-10-10","厅管招聘面试表格":"2026-09-12","直播招募登记":"2026-09-24","（废）BOSS经验总结_企微迁移副本":"2026-09-12","（废）推人计划":"2026-09-12","每日完成的登记表":"2026-09-11","（废）外宣招聘SOP与培训资料体系清单":"2026-09-11","经纪人通联表":"2026-10-09","线下招聘方案策划":"2026-09-11","12月31日线下招募活动策划":"2026-09-11","（废）外宣资料迁移台账":"2026-09-11","外宣部门资料架构与执行口径确认记录_2026-09-11":"2026-09-11","无标题文档_用途待确认":"2026-09-11","外宣招聘全流程SOP_V0.1旧版":"2026-09-11","外宣招聘平台基础培训_抖音朵朵兔keke_V0.3.pptx":"2026-09-11","外宣招聘平台基础培训_抖音朵朵兔keke_V0.2.pptx":"2026-09-11","外宣招聘平台基础培训模板_抖音朵朵兔keke_V0.1.pptx":"2026-09-11","关于UKI接表单流程以及注意事项的培训内容":"2026-09-11","UKI接表单话术技巧参考":"2026-09-11","UKI接表单培训流程_外宣专用版_20250830":"2026-09-11","《聘谁》A级招聘法 · 完整思维导图.pdf":"2026-09-21","语音厅行业黑话词典":"2026-09-11","（废）新外宣7天岗前培训手册_V0.1":"2026-09-11","外宣-萌新主播入会培训材料":"2026-09-24","（待优化）针对已读不回和消息未读攻略":"2026-09-11","（待优化）外宣经验总结贴":"2026-09-11","【历史资料-外站已停招】外宣招聘平台基础培训_抖音朵朵兔keke_V0.4.pptx":"2026-09-11","【历史资料-外站已停招】外宣招聘平台基础培训_抖音朵朵兔keke_V0.4":"2026-09-11","外宣招聘平台基础培训PPT制作Plan":"2026-09-11","原声力传媒_微信二维码原图.png":"2026-09-11","原声力传媒_微信宣传图_A版黑金商务风_语音厅公会.png":"2026-09-11","原声力传媒_六大核心扶持宣传图_微信咨询版.png":"2026-09-11","菁英引荐专项激励_线上奖励调整版.png":"2026-09-11","急招厅管1名_朋友圈最终版.png":"2026-09-11","线下不露脸语音厅聊天嘉宾招聘发布文案":"2026-09-11","抖音平台厅管招募_朋友圈文案":"2026-09-11","招聘信息资料使用说明":"2026-09-11","原声力传媒_微信宣传图_C版紫蓝潮流风.png":"2026-09-11","原声力传媒_微信宣传图_B版蓝白科技风.png":"2026-09-11","原声力传媒_微信宣传图_A版黑金商务风.png":"2026-09-11","原声力传媒_六大核心扶持宣传图_朋友圈版.png":"2026-09-11","原声力传媒_公会优势宣传图_朋友圈版.png":"2026-09-11","抖音平台厅管招募_朋友圈版.png":"2026-09-11","菁英引荐专项激励_去水印版.png":"2026-09-11","急招厅管1名_朋友圈版_v2.png":"2026-09-11","朵朵兔平台招聘培训内容整理":"2026-09-11","（废）抖音线下执行手册_公司指定版本":"2026-09-11","（废）抖音平台招聘培训内容整理":"2026-09-11","外宣每日工作流程":"2026-10-09","BOSS直聘新账号SOP":"2026-09-11","keke平台招聘培训内容整理":"2026-09-11"});
 const hasTrainingRecord=x=>sessionsOf(readRecord(x[4])).length>0;
 const cats=['全部','已培训内容','新增文档',...new Set(D.map(x=>x[0]))],filters=document.querySelector('#filters'),grid=document.querySelector('#grid'),search=document.querySelector('#search'),hint=document.querySelector('#hint'),empty=document.querySelector('#empty');let cat='全部';document.querySelector('#total').textContent=D.length;document.querySelector('#categoryCount').textContent=cats.length-2;
 cats.forEach(x=>{const b=document.createElement('button');b.className='filter'+(x==='全部'?' active':'');b.textContent=x;b.onclick=()=>{cat=x;document.querySelectorAll('.filter').forEach(z=>z.classList.toggle('active',z.textContent===x));render()};filters.appendChild(b)});
